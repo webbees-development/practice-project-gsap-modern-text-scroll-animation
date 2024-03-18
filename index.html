@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Text Scroll Animation</title>
+  <link rel="stylesheet" href="main.css">
+</html>
+
+<body>
+  <section>
+    <h1>Scroll down for awesomeness.</h1>
+  </section>
+
+  <section>
+    <p class="reveal-type" data-bg-color="#cccccc" data-fg-color="teal">Systematically ushering in a new generation of amazing designers from across the world.</p>
+  </section>
+
+  <section>
+    <p class="reveal-type" data-bg-color="#b6b600" data-fg-color="black">Modern UI designers will expand their skillsets to include fontend.</p>
+  </section>
+
+  <section>
+    <p class="reveal-type" data-bg-color="#353535" data-fg-color="red">The web isn't static anymore, interactivity and motion now dominate.</p>
+  </section>
+
+  <section></section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.40/dist/lenis.min.js"></script> 
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const splitTypes = document.querySelectorAll('.reveal-type')
+
+    splitTypes.forEach((char, i) => {
+
+      // Version #1
+      //
+      // const text = new SplitType(char, { types: 'chars' })
+
+      // gsap.from(text.chars, {
+      //   scrollTrigger: {
+      //     trigger: char,
+      //     start: 'top 80%',
+      //     end: 'top 20%',
+      //     scrub: true,
+      //     markers: false,
+      //   },
+      //   opacity: 0.2,
+      //   // scaleY: 0,
+      //   // y: -20,
+      //   // transformOrigin: 'top',
+      //   stagger: 0.1
+      // })
+
+      // Version #2
+
+      // const bg = char.dataset.bgColor
+      // const fg = char.dataset.fgColor
+
+      // const text = new SplitType(char, { types: 'chars' })
+
+      // gsap.fromTo(text.chars, 
+      //   {
+      //     color: bg,
+      //   },
+      //   {
+      //     color: fg,
+      //     duration: 0.3,
+      //     stagger: 0.02,
+      //     scrollTrigger: {
+      //       trigger: char,
+      //       start: 'top 80%',
+      //       end: 'top 20%',
+      //       scrub: false,
+      //       markers: false,
+      //       toggleActions: 'play play reverse reverse',
+      //     }
+      //   }
+      // )
+
+      // Version #3
+
+      const text = new SplitType(char, { types: 'chars' })
+
+      gsap.fromTo(text.chars, 
+        {
+          opacity: 0.2,
+        },
+        {
+          opacity: 1,
+          duration: 0.2,
+          stagger: 0.01,
+          scrollTrigger: {
+            trigger: char,
+            start: 'top 80%',
+            end: 'top 20%',
+            scrub: false,
+            markers: false,
+            toggleActions: 'play play reverse reverse',
+          }
+        }
+      )
+    })
+
+    const lenis = new Lenis()
+
+    // lenis.on('scroll', (e) => {
+    //   console.log(e)
+    // })
+
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
+    requestAnimationFrame(raf)
+  </script>
+</body>
